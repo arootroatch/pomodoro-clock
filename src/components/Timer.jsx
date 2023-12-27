@@ -1,49 +1,59 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState, useEffect } from "react";
-import {useSelector} from 'react-redux';
+import { useEffect, useRef } from "react";
+import {useSelector, useDispatch} from 'react-redux';
+import { decrementTime, toggleRunning, reset } from "../redux/timerSlice";
+
 
 export default function Timer(props){
-    const sessionLength = useSelector((state)=>state.session.value);
-    const breakLength = useSelector((state)=>state.break.value);
+    const timeLeft = useSelector((state)=>state.timer.timeLeft);
+    const timerLabel = useSelector((state)=>state.timer.label);
+    const dispatch =useDispatch();
+    const running = useSelector((state)=>state.timer.running);
+    
 
-    const [timerLabel, setTimerLabel] = useState("Session");
-    const [running, setRunning] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(sessionLength);
-    console.log(sessionLength, timeLeft);
 
-    function toggleRunning(){
-        if (running){
-            setRunning(false);
-        } else {
-            setRunning(true)
+    function startStop(){
+        dispatch(toggleRunning());
+    }
+    function resetTimer(){
+        const beep = document.getElementById('beep');
+        dispatch(reset());
+        if (beep.duration>0){
+            beep.pause();
+            beep.currentTime = 0;
         }
     }
 
+    const countdown = useRef();
 
     useEffect(()=>{
-        let countdown;
         if(running){
-            countdown = setInterval(()=>{
-                if (timeLeft>0){
-                    setTimeLeft((prevState)=>prevState-1)
-                } else {
-                    setTimerLabel("Break");
-                    setTimeLeft(breakLength*60);
-                }
-            }, 1000)
+            const intervalID = setInterval(()=>{
+                console.log(timeLeft);
+                dispatch(decrementTime());
+            }, 1000);
+            countdown.current = intervalID;
         } else {
-            clearInterval(countdown);
+            const intervalID = countdown.current;
+            clearInterval(intervalID);
         }
     }, [running])
+
+    useEffect(()=>{
+        if(timeLeft===0){
+            document.getElementById('beep').play();
+        }
+    },[timeLeft])
 
     
 
     return(
         <div id="timer-wrapper">
             <h2 id="timer-label">{timerLabel}</h2>
-            <div id="time-left">{String(Math.floor(sessionLength/60)).padStart(2,'0')}:{String(Math.floor(sessionLength%60)).padStart(2, '0')}</div>
-            <button id="start_stop" onClick={()=>toggleRunning()}><FontAwesomeIcon icon={props.icon1}/><FontAwesomeIcon icon={props.icon2}/></button>
-            <button id="reset"><FontAwesomeIcon icon={props.icon3}/></button>
+            <div id="time-left">{String(Math.floor(timeLeft/60)).padStart(2,'0')}:{String(Math.floor(timeLeft%60)).padStart(2, '0')}</div>
+            <button id="start_stop" onClick={()=>startStop()}><FontAwesomeIcon icon={props.icon1}/><FontAwesomeIcon icon={props.icon2}/></button>
+            <button id="reset" onClick={()=>resetTimer()}><FontAwesomeIcon icon={props.icon3}/></button>
+            <audio id="beep" preload="auto" src="https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav"></audio>
         </div>
     )
 }

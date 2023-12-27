@@ -8,14 +8,14 @@ const sessionSlice = createSlice({
     reducers: {
         increment: (state) => {
             if (state.value <3600){
-                state.value += 60
+                state.value += 1
             } else {
                 return state;
             }
         }, 
         decrement: (state)=>{
             if(state.value > 1){
-                state.value -= 60
+                state.value -= 1
             } else {
                 return state;
             }
