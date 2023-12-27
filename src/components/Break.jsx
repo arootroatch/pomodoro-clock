@@ -14,7 +14,7 @@ export default function Break(props){
         <div id='break-wrapper'>
             <h2 id="break-label">Break Length</h2>
             <button id='break-increment' onClick={()=>dispatch(increment())}><FontAwesomeIcon icon={props.icon1}/></button>
-            <span id='break-length'>{breakLength}</span>
+            <span id='break-length'>{breakLength/60}</span>
             <button id='break-decrement' onClick={()=>dispatch(decrement())}><FontAwesomeIcon icon={props.icon2}/></button>
         </div>
     )
