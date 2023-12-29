@@ -9,7 +9,8 @@ const breakPhrases = [
     "You've been slouching for too long!", 
     "Break time!",
     "Time to refill your coffee!",
-    "Go get a snack; you've earned it!"
+    "Go get a snack; you've earned it!",
+    "BING BONG! TAKE A BREAK!"
 ]
 
 const initialState = {
