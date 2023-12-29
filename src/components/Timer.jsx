@@ -29,7 +29,6 @@ export default function Timer(props){
     useEffect(()=>{
         if(running){
             const intervalID = setInterval(()=>{
-                console.log(timeLeft);
                 dispatch(decrementTime());
             }, 1000);
             countdown.current = intervalID;

@@ -76,11 +76,26 @@ button:focus-visible {
 }
 #session-wrapper, #break-wrapper{
   position: relative;
-  bottom: 12px;
+  bottom: 35px;
   span {
     font-size: 1.5em;
     position: relative;
     bottom: 15px
+  }
+  label{
+    font-size: 1.5em;
+    font-weight: bold;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  select {
+    font-size: 1.5em;
+    width: 150px;
+    text-align: center;
+    background-color: #591d3b;
+    border-radius: 10px;
+    border:1px solid white;
   }
   
 }
