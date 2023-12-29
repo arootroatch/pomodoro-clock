@@ -59,80 +59,45 @@ const timerSlice = createSlice({
                 return state
             }
         },
-        incrementBreak: (state) => {
-            if (state.breakControl < 3600 && !state.running){
-                if(state.label==="Break"){
-                    return {
-                        ...state,
-                        breakControl: state.breakControl+60,
-                        timeLeft: state.breakControl+60
-                    }
-                }
-                return {
-                    ...state,
-                    breakControl: state.breakControl + 60,
-                }
-            } else {
-                return state;
-            }
-        }, 
-        decrementBreak: (state)=> {
-            if (state.breakControl>60 && !state.running){
+        setBreak: (state, action)=>{
+            if(!state.running){
                 if (state.label==="Break"){
-                    return {
-                        ...state,
-                        breakControl: state.breakControl-60,
-                        timeLeft: state.breakControl-60
-                    }
-                } else {
                     return{
                         ...state,
-                        breakControl: state.breakControl - 60,
+                        breakControl: action.payload*60,
+                        timeLeft: action.payload*60
+                    }
+                } else {
+                    return {
+                        ...state,
+                        breakControl: action.payload*60,
                     }
                 }
             } else {
                 return state;
             }
         },
-        incrementSession: (state) => {
-            if (state.sessionControl <3600 && !state.running){
-                if(state.label==="Session"){
-                    return {
-                        ...state,
-                        sessionControl: state.sessionControl+60,
-                        timeLeft: state.sessionControl+60
-                    }
-                } else {
+        setSession: (state, action)=>{
+            if(!state.running){
+                if (state.label==="Session"){
                     return{
                         ...state,
-                        sessionControl: state.sessionControl + 60,
-                    }
-                }
-            } else {
-                return state;
-            }
-        }, 
-        decrementSession: (state)=>{
-            if(state.sessionControl > 60 && !state.running){
-                if(state.label==="Session"){
-                    return {
-                        ...state,
-                        sessionControl: state.sessionControl-60,
-                        timeLeft: state.sessionControl-60
+                        breakControl: action.payload*60,
+                        timeLeft: action.payload*60
                     }
                 } else {
                     return {
                         ...state,
-                        sessionControl: state.sessionControl - 60,
+                        breakControl: action.payload*60,
                     }
                 }
             } else {
                 return state;
             }
-        }
+        },
     }
 })
 
-export const {decrementSession, decrementBreak, incrementSession, incrementBreak, decrementTime, toggleRunning, reset} = timerSlice.actions;
+export const { setBreak, setSession, decrementTime, toggleRunning, reset} = timerSlice.actions;
 
 export default timerSlice.reducer;

@@ -29,7 +29,6 @@ export default function Timer(props){
     useEffect(()=>{
         if(running){
             const intervalID = setInterval(()=>{
-                console.log(timeLeft);
                 dispatch(decrementTime());
             }, 1000);
             countdown.current = intervalID;
@@ -53,7 +52,7 @@ export default function Timer(props){
             <div id="time-left">{String(Math.floor(timeLeft/60)).padStart(2,'0')}:{String(Math.floor(timeLeft%60)).padStart(2, '0')}</div>
             <button id="start_stop" onClick={()=>startStop()}><FontAwesomeIcon icon={props.icon1}/><FontAwesomeIcon icon={props.icon2}/></button>
             <button id="reset" onClick={()=>resetTimer()}><FontAwesomeIcon icon={props.icon3}/></button>
-            <audio id="beep" preload="auto" src="https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav"></audio>
+            <audio id="beep" preload="auto" src="/acousticguitar-c-chord-103782.mp3"></audio>
         </div>
     )
 }
