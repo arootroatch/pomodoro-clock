@@ -1,5 +1,17 @@
 import {createSlice} from '@reduxjs/toolkit';
 
+const breakPhrases = [
+    "Time to walk the dog!",
+    "Get up and stretch before you get hip problems!",
+    "Have you watered your plants today?",
+    "Drop and give me 20!",
+    "Rest your carpals before they tunnel!",
+    "You've been slouching for too long!", 
+    "Break time!",
+    "Time to refill your coffee!",
+    "Go get a snack; you've earned it!"
+]
+
 const initialState = {
     label: 'Session',
     sessionControl: 1500,
@@ -38,11 +50,11 @@ const timerSlice = createSlice({
                 } else {
                     return {
                         ...state,
-                        label: "Break",
+                        label: breakPhrases[Math.floor(Math.random()*breakPhrases.length)],
                         timeLeft: state.breakControl
                     }
                 }
-            } else if (state.label === "Break"){
+            } else if (state.label !== "Session"){
                 if(state.timeLeft>0){
                     return {
                         ...state,
@@ -61,7 +73,7 @@ const timerSlice = createSlice({
         },
         setBreak: (state, action)=>{
             if(!state.running){
-                if (state.label==="Break"){
+                if (state.label!=="Session"){
                     return{
                         ...state,
                         breakControl: action.payload*60,
