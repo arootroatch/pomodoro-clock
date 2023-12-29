@@ -19,7 +19,7 @@ export default function Session(){
         const select = document.getElementById('session');
         if(running & !select.getAttribute('disabled')){
             select.setAttribute('disabled', "");
-        } else if (select.getAttribute('disabled')){
+        } else {
             select.removeAttribute('disabled', "")
         }
     },[running])
