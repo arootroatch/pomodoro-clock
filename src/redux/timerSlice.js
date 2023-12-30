@@ -95,13 +95,13 @@ const timerSlice = createSlice({
                 if (state.label==="Session"){
                     return{
                         ...state,
-                        breakControl: action.payload*60,
+                        sessionControl: action.payload*60,
                         timeLeft: action.payload*60
                     }
                 } else {
                     return {
                         ...state,
-                        breakControl: action.payload*60,
+                        sessionControl: action.payload*60,
                     }
                 }
             } else {
