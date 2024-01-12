@@ -9,7 +9,6 @@ export default function TimerSelect({wrapper, label, name, defaultValue}){
   const running = useSelector((state)=>state.timer.running);
 
   function handleChange(e){
-    console.log(e.target.value);
     name==='session' ? dispatch(setSession(e.target.value)) : name ==='break' ? dispatch(setBreak(e.target.value)) : false;
   }
 
