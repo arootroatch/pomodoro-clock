@@ -1,33 +1,22 @@
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {useSelector} from 'react-redux';
+import {useSelector} from "react-redux";
+import { useDispatch} from 'react-redux';
 import { setSession } from "../redux/timerSlice";
-import {useDispatch} from 'react-redux'
-import { useEffect } from 'react';
+import { setBreak } from '../redux/timerSlice';
 
-export default function Session(){
+export default function TimerSelect({wrapper, label, name, defaultValue}){
 
-    const dispatch = useDispatch();
-    const running = useSelector((state)=>state.timer.running);
+  const dispatch = useDispatch();
+  const running = useSelector((state)=>state.timer.running);
 
-    function handleChange(){
-        const select = document.getElementById('session');
-        dispatch(setSession(select.value));
-    }
-    
-    
-    useEffect(()=>{
-        const select = document.getElementById('session');
-        if(running & !select.getAttribute('disabled')){
-            select.setAttribute('disabled', "");
-        } else {
-            select.removeAttribute('disabled', "")
-        }
-    },[running])
+  function handleChange(e){
+    console.log(e.target.value);
+    name==='session' ? dispatch(setSession(e.target.value)) : name ==='break' ? dispatch(setBreak(e.target.value)) : false;
+  }
 
-    return(
-        <div id="session-wrapper">
-            <label htmlFor="session" id='session-label'>Session Length</label>
-            <select name="session" id="session" defaultValue="25" onChange={()=>handleChange()}>
+  return(
+    <div id={wrapper}>
+            <label htmlFor={name} id={label}>Session Length</label>
+            <select name={name} id={name} defaultValue={defaultValue} onChange={(e)=>handleChange(e)} disabled={running}>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -90,5 +79,5 @@ export default function Session(){
                 <option value="60">60</option>
             </select>
         </div>
-    )
+  )
 }
